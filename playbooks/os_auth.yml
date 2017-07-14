@@ -1,19 +1,22 @@
 ---
-- name: Blah
+- name: Do something on OpenStack with Ansible-Inside
   hosts: localhost
   connection: local
   # vars_files:
   #   - "../group_vars/all/vars"
   tasks:
-    - debug: var=manageiq
-    - debug: var=manageiq.api_url
-    - debug: var=manageiq.api_token
-    - debug: var=manageiq.service
-    - debug: var=manageiq.event_target
+    # - debug: var=manageiq
+    # - debug: var=manageiq.api_url
+    # - debug: var=manageiq.api_token
+    # - debug: var=manageiq.service
 
     - name: Authenticate to the cloud and retrieve the service catalog
       os_auth:
-        cloud: whatever
+        # cloud: whatever
+        auth:
+          auth_url: 'https://192.168.42.132:5001/v2.0'
+          username: 'admin'
+          password: bdee3d85b0264ad4
 
     - name: Show service catalog
       debug:
