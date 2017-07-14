@@ -10,18 +10,18 @@
     # - debug: var=manageiq.api_token
     # - debug: var=manageiq.service
 
-    - name: Authenticate to the cloud and retrieve the service catalog
-      os_auth:
-        # cloud: whatever
-        auth:
-          auth_url: 'http://192.168.42.132:5000/v2.0'
-          username: 'admin'
-          password: bdee3d85b0264ad4
-        validate_certs: no
+    # - name: Authenticate to the cloud and retrieve the service catalog
+    #   os_auth:
+    #     # cloud: whatever
+    #     auth:
+    #       auth_url: 'http://192.168.42.132:5000/v2.0'
+    #       username: 'admin'
+    #       password: bdee3d85b0264ad4
+    #     validate_certs: no
 
     # Create a project
     - os_project:
-        # cloud: mycloud
+        cloud: mycloud
         state: present
         name: demoproject
         description: demodescription
