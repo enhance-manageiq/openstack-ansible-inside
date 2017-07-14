@@ -1,8 +1,20 @@
 ---
-- name: Authenticate to the cloud and retrieve the service catalog
-  os_auth:
-    cloud: whatever
+- name: Blah
+  hosts: localhost
+  connection: local
+  # vars_files:
+  #   - "../group_vars/all/vars"
+  tasks:
+    - debug: var=manageiq
+    - debug: var=manageiq.api_url
+    - debug: var=manageiq.api_token
+    - debug: var=manageiq.service
+    - debug: var=manageiq.event_target
 
-- name: Show service catalog
-  debug:
-    var: service_catalog
+    - name: Authenticate to the cloud and retrieve the service catalog
+      os_auth:
+        cloud: whatever
+
+    - name: Show service catalog
+      debug:
+        var: service_catalog
