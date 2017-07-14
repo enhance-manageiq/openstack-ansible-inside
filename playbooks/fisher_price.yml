@@ -1,0 +1,73 @@
+---
+- name: Setup oVirt environment
+  hosts: localhost
+  connection: local
+  vars_files:
+    - "../group_vars/all/vars"
+  tasks:
+    - debug: var=manageiq
+    - debug: var=manageiq.api_url
+    - debug: var=manageiq.api_token
+    - debug: var=manageiq.service
+    - debug: var=manageiq.event_target
+
+    - block:
+        - name: initialize emtpy string for play history
+          set_fact:
+            play_history: "Running RHV maintenance play and setting host"
+
+        - name: Include oVirt password
+          no_log: true
+          include_vars: ovirt_password.yml
+
+        - name: Obtain SSO token
+          no_log: false
+          ovirt_auth:
+            url: "{{ url }}"
+            username: "{{ username }}"
+            password: "{{ password }}"
+            ca_file: "{{ ca_file }}"
+         
+        - name: set state of rhv host
+          ovirt_hosts:
+            auth: "{{ ovirt_auth }}"
+            state: "{{ rhv_host_state }}"
+            name: "{{ rhv_hostname }}"
+            wait: true
+
+        - name: appending the history
+          set_fact:
+            play_history: "{{ play_history }} {{ rhv_hostname }}"
+
+        - name: appending the history
+          set_fact:
+            play_history: "{{ play_history }} {{ rhv_host_state }} "
+
+        - name: update service
+          #command: curl -H "X-Auth-Token{{":"}} {{ manageiq.api_token }}" -k -d '{"action"{{":"}} "edit","resource"{{":"}} {"description"{{":"}} "i just killed rhv"}}' Content-Type{{":"}} application/json -X POST https://cfmeldo1.rdu.salab.redhat.com/api/{{ manageiq.service }}
+          command: curl -u admin{{":"}}smartvm -k -d '{"action"{{":"}} "edit","resource"{{":"}} {"description"{{":"}} "{{play_history}}"}}' -H "Accept{{":"}} application/json" -X POST {{ manageiq.api_url}}/api/{{ manageiq.service }}
+          #command: curl -k -d '{"action"{{":"}} "edit","resource"{{":"}} {"description"{{":"}} "{{play_history}}"}}' -H "Accept{{":"}} application/json" -H "X-Auth-Token{{":"}}{{ manageiq.api_token }}" -X POST {{ manageiq.api_url}}/api/{{ manageiq.service }}
+          register: curlreq
+
+        - debug: var=curlreq
+
+          #        - name: update service description (works only on single appliance)
+          #uri:
+          #  url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+          #  method: POST
+          #  body_format: json
+          #  body:
+          #    action: edit
+          #    resource : { description: "testme now"}
+          #  validate_certs: False
+          #  headers:
+          #    X-Auth-Token: "{{ manageiq.api_token }}"
+          #    Content-Type: "application/json"
+          #  status_code: 200
+
+
+      always:
+        - name: Revoke the SSO token
+          ovirt_auth:
+            state: absent
+            ovirt_auth: "{{ ovirt_auth }}"

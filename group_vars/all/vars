@@ -1,0 +1,17 @@
+---
+username: admin@internal
+url: https://rhevldo.rdu.salab.redhat.com/ovirt-engine/api
+ca_file: /tmp/readablebytower/ovirt-ca.pem
+external_provider: myprovider
+datacenter: Default
+cluster: Default
+host: myhost
+host_address: 10.11.165.94
+data_name: datadom
+iscsi_name: data2
+export_name: export
+iso_name: iso
+template: rhel73small
+vmpool: rhel7_pool
+vm: rhel7
+
