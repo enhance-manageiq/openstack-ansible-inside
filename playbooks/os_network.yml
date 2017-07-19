@@ -4,11 +4,13 @@
   connection: local
   environment:
     OS_CLIENT_CONFIG_FILE: /etc/ansible/openstack.yaml
+
   vars:
-    os_ssl: "{{ os_ssl }}"
+    os_ssl: "{{ os_ssl | default('false') }}"
     
   tasks:
     - debug: var=playbook_dir
+    # - debug: var=os_ssl
 
     # - name: Copy OS_CLIENT_CONFIG_FILE
     #   copy:
