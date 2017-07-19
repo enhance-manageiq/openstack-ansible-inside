@@ -1,0 +1,25 @@
+---
+- name: Do something on OpenStack with Ansible-Inside
+  hosts: localhost
+  connection: local
+  environment:
+    OS_CLIENT_CONFIG_FILE: /etc/ansible/openstack.yaml
+    
+  tasks:
+    debug: var=playbook_dir
+
+    - copy:
+        src: "{{ playbook_dir }}/scratch/openstack.yaml"
+        dest: /etc/ansible/openstack.yaml
+
+    - name: Authenticate to specified OpenStack provider
+    # https://docs.ansible.com/ansible/os_auth_module.html
+      os_auth:
+        cloud: mycloud
+
+    # Create an externally accessible network named 'ext_network'.
+    - os_network:
+        cloud: mycloud
+        state: present
+        name: ext_network
+        external: true
