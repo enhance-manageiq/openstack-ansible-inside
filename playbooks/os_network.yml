@@ -9,8 +9,8 @@
     debug: var=playbook_dir
 
     - copy:
-        src: "{{ playbook_dir }}/scratch/openstack.yaml"
-        dest: /etc/ansible/openstack.yaml
+      src: "{{ playbook_dir }}/scratch/openstack.yaml"
+      dest: /etc/ansible/openstack.yaml
 
     - name: Authenticate to specified OpenStack provider
     # https://docs.ansible.com/ansible/os_auth_module.html
