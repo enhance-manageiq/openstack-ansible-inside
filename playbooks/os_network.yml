@@ -5,10 +5,10 @@
   environment:
     OS_CLIENT_CONFIG_FILE: /etc/ansible/openstack.yaml
   vars:
-    network_name: boom
-    os_host: 192.168.42.133
-    os_password: d6ef8d5e38314435
-    os_ssl: false
+    # network_name: boom
+    # os_host: 192.168.42.133
+    # os_password: d6ef8d5e38314435
+    # os_ssl: false
     
   tasks:
     - debug: var=playbook_dir
