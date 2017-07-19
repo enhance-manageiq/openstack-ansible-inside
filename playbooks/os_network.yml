@@ -6,19 +6,21 @@
     OS_CLIENT_CONFIG_FILE: /etc/ansible/openstack.yaml
   vars:
     network_name: boom
+    os_host: 192.168.42.133
+    os_password: d6ef8d5e38314435
     
   tasks:
     - debug: var=playbook_dir
 
-    - name: Copy OS_CLIENT_CONFIG_FILE
-      copy:
-        src: "{{ playbook_dir }}/../scratch/openstack.yaml"
-        dest: /etc/ansible/openstack.yaml
-
-    # - name: Create OS_CLIENT_CONFIG_FILE
-    #   template:
-    #     src: templates/openstack.yaml.j2
+    # - name: Copy OS_CLIENT_CONFIG_FILE
+    #   copy:
+    #     src: "{{ playbook_dir }}/../scratch/openstack.yaml"
     #     dest: /etc/ansible/openstack.yaml
+
+    - name: Create OS_CLIENT_CONFIG_FILE
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
+        dest: /etc/ansible/openstack.yaml
 
     - name: Authenticate to specified OpenStack provider
     # https://docs.ansible.com/ansible/os_auth_module.html
