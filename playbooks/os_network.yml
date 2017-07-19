@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   environment:
-    OS_CLIENT_CONFIG_FILE: /etc/ansible/openstack.yaml
+    OS_CLIENT_CONFIG_FILE: /tmp/openstack.yaml
 
   vars:
     os_ssl: "{{ os_ssl | default('false') }}"
@@ -20,13 +20,13 @@
     - name: Create OS_CLIENT_CONFIG_FILE for Non-SSL
       template:
         src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
-        dest: /etc/ansible/openstack.yaml
+        dest: /tmp/openstack.yaml
       when: os_ssl == "false"
 
     - name: Create OS_CLIENT_CONFIG_FILE for SSL
       template:
         src: "{{ playbook_dir }}/../templates/openstack.yaml.ssl.j2"
-        dest: /etc/ansible/openstack.yaml
+        dest: /tmp/openstack.yaml
       when: os_ssl == "true"
 
     # https://docs.ansible.com/ansible/os_auth_module.html
