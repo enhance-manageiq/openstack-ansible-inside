@@ -3,7 +3,7 @@ clouds:
     region_name: RegionOne
     auth:
       username: admin
-      password: bdee3d85b0264ad4
+      password: d6ef8d5e38314435
       project_name: admin
-      auth_url: http://192.168.42.132:5000/v2.0
+      auth_url: http://192.168.42.133:5000/v2.0
     validate_certs: no
