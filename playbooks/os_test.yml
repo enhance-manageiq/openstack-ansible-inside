@@ -1,0 +1,25 @@
+---
+- name: Do something on OpenStack with Ansible-Inside
+  hosts: localhost
+  connection: local
+  # vars_files:
+  #   - "../group_vars/all/vars"
+  tasks:
+    # - debug: var=manageiq
+    # - debug: var=manageiq.api_url
+    # - debug: var=manageiq.api_token
+    # - debug: var=manageiq.service
+
+    # - name: export OS_CLIENT_CONFIG_FILE 
+    #   command: export OS_CLIENT_CONFIG_FILE=/etc/ansible/openstack.yaml
+
+    - name: Authenticate to the cloud and retrieve the service catalog
+    # https://docs.ansible.com/ansible/os_auth_module.html
+      os_auth:
+        cloud: mycloud
+        
+    # Gather facts about previously created projects
+    - os_project_facts:
+        cloud: mycloud
+    - debug:
+        var: openstack_projects
