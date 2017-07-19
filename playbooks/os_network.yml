@@ -21,13 +21,13 @@
       template:
         src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
         dest: /etc/ansible/openstack.yaml
-      when: os_ssl == false
+      when: os_ssl == "false"
 
     - name: Create OS_CLIENT_CONFIG_FILE for SSL
       template:
         src: "{{ playbook_dir }}/../templates/openstack.yaml.ssl.j2"
         dest: /etc/ansible/openstack.yaml
-      when: os_ssl == true
+      when: os_ssl == "true"
 
     # https://docs.ansible.com/ansible/os_auth_module.html
     - name: Authenticate to specified OpenStack provider
