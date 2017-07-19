@@ -8,6 +8,7 @@
     network_name: boom
     os_host: 192.168.42.133
     os_password: d6ef8d5e38314435
+    os_ssl: false
     
   tasks:
     - debug: var=playbook_dir
@@ -17,17 +18,24 @@
     #     src: "{{ playbook_dir }}/../scratch/openstack.yaml"
     #     dest: /etc/ansible/openstack.yaml
 
-    - name: Create OS_CLIENT_CONFIG_FILE
+    - name: Create OS_CLIENT_CONFIG_FILE for Non-SSL
       template:
         src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
         dest: /etc/ansible/openstack.yaml
+      when: os_ssl == false
 
-    - name: Authenticate to specified OpenStack provider
+    - name: Create OS_CLIENT_CONFIG_FILE for SSL
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.ssl.j2"
+        dest: /etc/ansible/openstack.yaml
+      when: os_ssl == true
+
     # https://docs.ansible.com/ansible/os_auth_module.html
+    - name: Authenticate to specified OpenStack provider
       os_auth:
         cloud: mycloud
 
-    # Create an externally accessible network named 'ext_network'.
+    # https://docs.ansible.com/ansible/os_network_module.html
     - os_network:
         cloud: mycloud
         state: present
