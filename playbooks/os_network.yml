@@ -4,14 +4,21 @@
   connection: local
   environment:
     OS_CLIENT_CONFIG_FILE: /etc/ansible/openstack.yaml
+  vars:
+    network_name: boom
     
   tasks:
-    debug: var=playbook_dir
+    - debug: var=playbook_dir
 
-    - copy:
-        # src: "{{ playbook_dir }}/scratch/openstack.yaml"
-        src: /scratch/openstack.yaml
+    - name: Copy OS_CLIENT_CONFIG_FILE
+      copy:
+        src: "{{ playbook_dir }}/../scratch/openstack.yaml"
         dest: /etc/ansible/openstack.yaml
+
+    # - name: Create OS_CLIENT_CONFIG_FILE
+    #   template:
+    #     src: templates/openstack.yaml.j2
+    #     dest: /etc/ansible/openstack.yaml
 
     - name: Authenticate to specified OpenStack provider
     # https://docs.ansible.com/ansible/os_auth_module.html
@@ -22,5 +29,5 @@
     - os_network:
         cloud: mycloud
         state: present
-        name: ext_network
+        name: "{{ network_name }}"
         external: true
