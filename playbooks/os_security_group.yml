@@ -1,0 +1,53 @@
+---
+- name: Do something on OpenStack with Ansible-Inside
+  hosts: localhost
+  connection: local
+  environment:
+    OS_CLIENT_CONFIG_FILE: /tmp/openstack.yaml
+
+  vars:
+    os_ssl: "{{ os_ssl | default('false') }}"
+    
+  tasks:
+    - debug: var=security_group
+    - debug: var=os_ssl
+
+    - name: Create OS_CLIENT_CONFIG_FILE for Non-SSL
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
+        dest: /tmp/openstack.yaml
+      when: os_ssl == "false"
+
+    - name: Create OS_CLIENT_CONFIG_FILE for SSL
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.ssl.j2"
+        dest: /tmp/openstack.yaml
+      when: os_ssl == "true"
+
+    # https://docs.ansible.com/ansible/os_auth_module.html
+    - name: Authenticate to specified OpenStack provider
+      os_auth:
+        cloud: mycloud
+
+    # https://docs.ansible.com/ansible/latest/os_security_group_module.html
+    - os_security_group:
+        cloud: mycloud
+        state: present
+        name:  "{{ security_group }}"
+        description: my new security group
+
+    # https://docs.ansible.com/ansible/latest/os_security_group_rule_module.html
+    - os_security_group_rule:
+        cloud: mycloud
+        security_group: "{{ security_group }}"
+        protocol: tcp
+        port_range_min: 80
+        port_range_max: 80
+        remote_ip_prefix: 0.0.0.0/0
+
+    # Create a security group rule for ping
+    - os_security_group_rule:
+        cloud: mycloud
+        security_group: "{{ security_group }}"
+        protocol: icmp
+        remote_ip_prefix: 0.0.0.0/0
