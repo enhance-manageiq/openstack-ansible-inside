@@ -10,7 +10,7 @@
     
   tasks:
     - debug: var=playbook_dir
-    # - debug: var=os_ssl
+    - debug: var=os_ssl
 
     # - name: Copy OS_CLIENT_CONFIG_FILE
     #   copy:
