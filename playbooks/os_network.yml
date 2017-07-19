@@ -9,7 +9,7 @@
     os_ssl: "{{ os_ssl | default('false') }}"
     
   tasks:
-    - debug: var=playbook_dir
+    - debug: var=network_name
     - debug: var=os_ssl
 
     # - name: Copy OS_CLIENT_CONFIG_FILE
