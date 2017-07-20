@@ -5,8 +5,8 @@
   environment:
     OS_CLIENT_CONFIG_FILE: /tmp/openstack.yaml
 
-  vars:
-    os_ssl: "{{ os_ssl | default('false') }}"
+  # vars:
+  #   os_ssl: "{{ os_ssl | default('false') }}"
     
   tasks:
     - debug: var=security_group
