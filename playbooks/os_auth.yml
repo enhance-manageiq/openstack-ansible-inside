@@ -2,22 +2,32 @@
 - name: Do something on OpenStack with Ansible-Inside
   hosts: localhost
   connection: local
-  # vars_files:
-  #   - "../group_vars/all/vars"
-  tasks:
-    # - debug: var=manageiq
-    # - debug: var=manageiq.api_url
-    # - debug: var=manageiq.api_token
-    # - debug: var=manageiq.service
+  environment:
+    OS_CLIENT_CONFIG_FILE: /tmp/openstack.yaml
 
-    - name: Authenticate to the cloud and retrieve the service catalog
+  tasks:
+    - debug: var=manageiq
+    - debug: var=manageiq.api_url
+    - debug: var=manageiq.api_token
+    - debug: var=manageiq.service
+    - debug: var=os_ssl
+
+    - name: Create OS_CLIENT_CONFIG_FILE for Non-SSL
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
+        dest: /tmp/openstack.yaml
+      when: os_ssl == "false"
+
+    - name: Create OS_CLIENT_CONFIG_FILE for SSL
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.ssl.j2"
+        dest: /tmp/openstack.yaml
+      when: os_ssl == "true"
+
+    # https://docs.ansible.com/ansible/os_auth_module.html
+    - name: Authenticate to specified OpenStack provider
       os_auth:
-        # cloud: whatever
-        auth:
-          auth_url: 'http://192.168.42.132:5000/v2.0'
-          username: 'admin'
-          password: bdee3d85b0264ad4
-        validate_certs: no
+        cloud: mycloud
 
     - name: Show service catalog
       debug:
