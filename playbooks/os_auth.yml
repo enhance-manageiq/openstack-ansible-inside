@@ -29,6 +29,6 @@
       os_auth:
         cloud: mycloud
 
-    - name: Show service catalog
+    - name: Show service catalogue
       debug:
         var: service_catalog

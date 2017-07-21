@@ -12,11 +12,6 @@
     - debug: var=network_name
     - debug: var=os_ssl
 
-    # - name: Copy OS_CLIENT_CONFIG_FILE
-    #   copy:
-    #     src: "{{ playbook_dir }}/../scratch/openstack.yaml"
-    #     dest: /etc/ansible/openstack.yaml
-
     - name: Create OS_CLIENT_CONFIG_FILE for Non-SSL
       template:
         src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
