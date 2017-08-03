@@ -1,7 +1,7 @@
 ---
 - description: 
   buttons: submit,cancel
-  label: OpenStack |Create External Network
+  label: OpenStack | Create External Network
   blueprint_id: 
   dialog_tabs:
   - description: 
