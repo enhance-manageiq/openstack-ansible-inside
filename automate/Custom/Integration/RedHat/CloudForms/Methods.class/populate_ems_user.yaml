@@ -1,0 +1,12 @@
+---
+object_type: instance
+version: 1.0
+object:
+  attributes:
+    display_name: 
+    name: populate_ems_user
+    inherits: 
+    description: 
+  fields:
+  - method:
+      value: populate_ems_user

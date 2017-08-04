@@ -2,7 +2,7 @@ clouds:
   mycloud:
     region_name: RegionOne
     auth:
-      username: admin
+      username: {{ os_user }}
       password: {{ os_password }}
       project_name: admin
       auth_url: http://{{ os_host }}:5000/v2.0
