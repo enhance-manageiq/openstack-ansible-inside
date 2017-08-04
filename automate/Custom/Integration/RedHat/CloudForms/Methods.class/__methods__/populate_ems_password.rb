@@ -18,7 +18,7 @@ unless param_os_host.nil?
   unless value.nil?
     list_values = {
       'required'  => true,
-      'protected' => false,
+      'protected' => true,
       'read_only' => true,
       'value'     => value,
     }
