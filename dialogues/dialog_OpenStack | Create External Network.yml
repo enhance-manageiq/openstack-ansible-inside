@@ -19,7 +19,7 @@
       position: 0
       dialog_fields:
       - name: param_network_name
-        description: network_name
+        description: ''
         data_type: string
         notes: 
         notes_display: 
@@ -57,7 +57,7 @@
           ae_message: 
           ae_attributes: {}
       - name: param_os_host
-        description: os_host
+        description: ''
         data_type: string
         notes: 
         notes_display: 
@@ -67,35 +67,36 @@
         required: true
         required_method: 
         required_method_options: {}
-        default_value: ''
-        values: 
+        default_value: 
+        values:
         values_method: 
         values_method_options: {}
         options:
-          :protected: false
+          :force_multi_value: false
+          :sort_by: :value
         label: OpenStack Host
         position: 1
         validator_type: 
         validator_rule: 
         reconfigurable: true
-        dynamic: 
+        dynamic: true
         show_refresh_button: 
         load_values_on_init: 
         read_only: false
         auto_refresh: 
-        trigger_auto_refresh: 
+        trigger_auto_refresh: true
         visible: true
-        type: DialogFieldTextBox
+        type: DialogFieldDropDownList
         resource_action:
           action: 
           resource_type: DialogField
-          ae_namespace: 
-          ae_class: 
-          ae_instance: 
+          ae_namespace: Integration/RedHat/CloudForms
+          ae_class: Methods
+          ae_instance: list_openstack_ems
           ae_message: 
           ae_attributes: {}
-      - name: param_os_password
-        description: os_password
+      - name: param_os_user
+        description: ''
         data_type: string
         notes: 
         notes_display: 
@@ -106,34 +107,72 @@
         required_method: 
         required_method_options: {}
         default_value: ''
-        values: 
+        values: ''
         values_method: 
         values_method_options: {}
         options:
-          :protected: true
-        label: OpenStack Password
+          :protected: false
+        label: OpenStack User
         position: 2
         validator_type: 
         validator_rule: 
-        reconfigurable: true
-        dynamic: 
+        reconfigurable: 
+        dynamic: true
         show_refresh_button: 
         load_values_on_init: 
-        read_only: false
-        auto_refresh: 
+        read_only: true
+        auto_refresh: true
         trigger_auto_refresh: 
         visible: true
         type: DialogFieldTextBox
         resource_action:
           action: 
           resource_type: DialogField
-          ae_namespace: 
-          ae_class: 
-          ae_instance: 
+          ae_namespace: Integration/RedHat/CloudForms
+          ae_class: Methods
+          ae_instance: populate_ems_user
+          ae_message: 
+          ae_attributes: {}
+      - name: param_os_password
+        description: ''
+        data_type: string
+        notes: 
+        notes_display: 
+        display: edit
+        display_method: 
+        display_method_options: {}
+        required: true
+        required_method: 
+        required_method_options: {}
+        default_value: ''
+        values: ''
+        values_method: 
+        values_method_options: {}
+        options:
+          :protected: true
+        label: OpenStack Password
+        position: 3
+        validator_type: 
+        validator_rule: 
+        reconfigurable: true
+        dynamic: true
+        show_refresh_button: 
+        load_values_on_init: 
+        read_only: true
+        auto_refresh: true
+        trigger_auto_refresh: 
+        visible: true
+        type: DialogFieldTextBox
+        resource_action:
+          action: 
+          resource_type: DialogField
+          ae_namespace: Integration/RedHat/CloudForms
+          ae_class: Methods
+          ae_instance: populate_ems_password
           ae_message: 
           ae_attributes: {}
       - name: param_os_ssl
-        description: os_ssl
+        description: ''
         data_type: string
         notes: 
         notes_display: 
@@ -158,7 +197,7 @@
           :sort_order: :ascending
           :force_multi_value: false
         label: OpenStack SSL
-        position: 3
+        position: 4
         validator_type: 
         validator_rule: 
         reconfigurable: true
