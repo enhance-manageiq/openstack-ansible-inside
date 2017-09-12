@@ -29,10 +29,10 @@
       os_auth:
         cloud: mycloud
 
-    # https://docs.ansible.com/ansible/os_network_module.html
+    # https://docs.ansible.com/ansible/os_server_module.html
     - os_server:
-	    cloud: mycloud
+        cloud: mycloud
         state: present
-		name: "{{ instance_name }}"
+        name: "{{ instance_name }}"
         image: cirros
         flavor: m1.tiny
