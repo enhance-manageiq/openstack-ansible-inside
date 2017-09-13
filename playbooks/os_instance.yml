@@ -36,3 +36,4 @@
         name: "{{ instance_name }}"
         image: cirros
         flavor: m1.tiny
+        network: d7d71373-cebe-4649-8ab3-1e4d17f71f3b
