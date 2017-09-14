@@ -10,6 +10,7 @@
 
   tasks:
     - debug: var=instance_name
+    - debug: var=network_name
     - debug: var=os_ssl
 
     - name: Create OS_CLIENT_CONFIG_FILE for Non-SSL
@@ -36,4 +37,4 @@
         name: "{{ instance_name }}"
         image: cirros
         flavor: m1.tiny
-        network: d7d71373-cebe-4649-8ab3-1e4d17f71f3b
+        network: "{{ network_name }}"

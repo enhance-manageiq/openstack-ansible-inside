@@ -5,10 +5,10 @@
 value = nil
 
 param_os_host = $evm.root['dialog_param_os_host'] || nil
-$evm.log(:info, param_os_host)
+$evm.log(:info, "param_os_host: #{param_os_host}")
 
 unless param_os_host.nil?
-  ems = $evm.vmdb('ManageIQ_Providers_Openstack_CloudManager').all.detect {|x| x.hostname == param_os_host}
+  ems = $evm.vmdb('ManageIQ_Providers_Openstack_CloudManager').all.detect(:hostname => param_os_host).first
 
   unless ems.nil?
     value = ems.authentication_userid
@@ -19,9 +19,9 @@ unless param_os_host.nil?
         'read_only' => true,
         'value'     => value,
       }
-      list_values.each do |key, value| 
-        $evm.object[key] = value
-      end
+
+      list_values.each { |k, v| $evm.object[key] = value }
+
     end
   end
 end
