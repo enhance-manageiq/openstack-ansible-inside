@@ -7,7 +7,7 @@ values_hash['!'] = '-- select from list --'
 
 ems = $evm.vmdb('ManageIQ_Providers_Openstack_CloudManager')
 
-$evm.log(:info, ems.count)
+$evm.log(:info, "Provider count: #{ems.count}")
 
 ems.all.each do |e|
   values_hash[e.hostname] = e.name
