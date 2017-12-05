@@ -20,7 +20,7 @@ unless param_os_host.nil?
         'value'     => value,
       }
 
-      list_values.each { |k, v| $evm.object[k] = v }
+      list_values.each { |key, value| $evm.object[key] = value }
 
     end
   end
