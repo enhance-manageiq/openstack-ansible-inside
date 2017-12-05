@@ -67,8 +67,12 @@
         required: true
         required_method: 
         required_method_options: {}
-        default_value: 
+        default_value: "!"
         values:
+        - - "!"
+          - "-- select from list --"
+        - - 10.9.60.133
+          - OpenStack
         values_method: 
         values_method_options: {}
         options:
@@ -95,6 +99,46 @@
           ae_instance: list_openstack_ems
           ae_message: 
           ae_attributes: {}
+      - name: param_network_name
+        description: 
+        data_type: 
+        notes: 
+        notes_display: 
+        display: edit
+        display_method: 
+        display_method_options: {}
+        required: true
+        required_method: 
+        required_method_options: {}
+        default_value: 
+        values:
+        - - 
+          - "<None>"
+        values_method: 
+        values_method_options: {}
+        options:
+          :force_multi_value: false
+        label: Network Name
+        position: 2
+        validator_type: 
+        validator_rule: 
+        reconfigurable: 
+        dynamic: true
+        show_refresh_button: 
+        load_values_on_init: 
+        read_only: false
+        auto_refresh: true
+        trigger_auto_refresh: false
+        visible: true
+        type: DialogFieldDropDownList
+        resource_action:
+          action: 
+          resource_type: DialogField
+          ae_namespace: Integration/RedHat/CloudForms
+          ae_class: Methods
+          ae_instance: populate_ems_network
+          ae_message: 
+          ae_attributes: {}
       - name: param_os_user
         description: ''
         data_type: string
@@ -113,7 +157,7 @@
         options:
           :protected: false
         label: OpenStack User
-        position: 2
+        position: 3
         validator_type: 
         validator_rule: 
         reconfigurable: 
@@ -151,7 +195,7 @@
         options:
           :protected: true
         label: OpenStack Password
-        position: 3
+        position: 4
         validator_type: 
         validator_rule: 
         reconfigurable: true
@@ -184,8 +228,6 @@
         required_method_options: {}
         default_value: 'false'
         values:
-        - - 
-          - "<Choose>"
         - - 'false'
           - 'false'
         - - 'true'
@@ -197,7 +239,7 @@
           :sort_order: :ascending
           :force_multi_value: false
         label: OpenStack SSL
-        position: 4
+        position: 5
         validator_type: 
         validator_rule: 
         reconfigurable: true
