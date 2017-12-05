@@ -5,7 +5,7 @@
 value = nil
 
 param_os_host = $evm.root['dialog_param_os_host'] || nil
-$evm.log(:info, param_os_host)
+$evm.log(:info, "param_os_host: #{param_os_host}")
 
 unless param_os_host.nil?
   ems = $evm.vmdb('ManageIQ_Providers_Openstack_CloudManager').all.detect(:hostname => param_os_host).first
