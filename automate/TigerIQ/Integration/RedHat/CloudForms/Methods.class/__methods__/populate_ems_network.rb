@@ -21,7 +21,7 @@ unless param_os_host.nil?
     list_values = {
       'sort_by'   => :value,
       'data_type' => :string,
-      'read_only' => true,
+      'read_only' => false,
       'values'    => values_hash
       }
 
