@@ -10,6 +10,7 @@
 
   tasks:
     - debug: var=instance_name
+    - debug: var=instance_flavour
     - debug: var=network_name
     - debug: var=os_ssl
 
@@ -36,5 +37,5 @@
         state: present
         name: "{{ instance_name }}"
         image: cirros
-        flavor: m1.tiny
+        flavor: "{{ instance_flavour }}"
         network: "{{ network_name }}"
