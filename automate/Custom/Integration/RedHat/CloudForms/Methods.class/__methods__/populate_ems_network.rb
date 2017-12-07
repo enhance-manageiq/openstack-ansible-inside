@@ -16,6 +16,10 @@ unless param_os_host.nil?
       values_hash[n.ems_ref] = n.name
     end
 
+    ems.network_manager.public_networks.each do |n|
+      values_hash[n.ems_ref] = n.name
+    end
+
     $evm.log(:info, "values_hash: #{values_hash}")
 
     list_values = {
