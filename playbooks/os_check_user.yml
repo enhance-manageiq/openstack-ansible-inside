@@ -1,0 +1,66 @@
+---
+- name: Check user's permission on OpenStack with Ansible-Inside
+  hosts: localhost
+  connection: local
+  environment:
+    OS_CLIENT_CONFIG_FILE: /tmp/openstack.yaml
+
+  vars:
+    os_ssl: "{{ os_ssl | default('false') }}"
+
+  tasks:
+    - debug: var=user_name
+    - debug: var=os_ssl
+
+    - name: Create OS_CLIENT_CONFIG_FILE for Non-SSL
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.j2"
+        dest: /tmp/openstack.yaml
+      when: os_ssl == "false"
+
+    - name: Create OS_CLIENT_CONFIG_FILE for SSL
+      template:
+        src: "{{ playbook_dir }}/../templates/openstack.yaml.ssl.j2"
+        dest: /tmp/openstack.yaml
+      when: os_ssl == "true"
+
+    - name: Authenticate to specified OpenStack provider
+      os_auth:
+        cloud: mycloud
+
+    # http://docs.ansible.com/ansible/latest/modules/os_user_role_module.html
+    - name: Grant admin role to user and check
+      block:
+        - os_user_role:
+            cloud: mycloud
+            user: {{ user_name }}
+            role: admin
+            project: admin
+          check_mode: yes
+          register: user_state
+      rescue:
+        - name: user don't exist
+          set_fact:
+            message: "{{ user_name }} don't exist"
+
+    - name: Set message if user is not admin
+      set_fact:
+        message: "{{ user_name }} don't have permission"
+      when: user_state|changed
+
+    - name: Set message if user is admin
+      set_fact:
+        message: "{{ user_name }} have permission"
+      when: message is undefined
+
+    # http://docs.ansible.com/ansible/latest/modules/mail_module.html
+    - name: Send mail
+      mail:
+        host: smtp.gmail.com
+        port: 587
+        username: username@gmail.com
+        passsword: mysecret
+        subject: Request-report
+        body: "{{ message }}"
+        to: user@gmail.com
+
